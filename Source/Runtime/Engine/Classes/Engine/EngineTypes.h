@@ -473,6 +473,7 @@ enum EMaterialShadingModel
 	MSM_Cloth					UMETA(DisplayName="Cloth"),
 	MSM_Eye						UMETA(DisplayName="Eye"),
 	MSM_SingleLayerWater		UMETA(DisplayName="SingleLayerWater"),
+	MSM_SGSSS					UMETA(DisplayName = "SG_SSS"),//add SG_SSS shading model 球面高斯函数SSS
 	/** Number of unique shading models. */
 	MSM_NUM						UMETA(Hidden),
 	/** Shading model will be determined by the Material Expression Graph,

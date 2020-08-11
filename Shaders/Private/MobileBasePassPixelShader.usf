@@ -22,6 +22,10 @@
 #include "PlanarReflectionShared.ush"
 #include "MobileGGX.ush"
 
+#if MATERIAL_SHADINGMODEL_SG_SSS //add SG_SSS header
+#include "SphericalGaussian.ush"
+#endif
+
 #if MATERIAL_SHADINGMODEL_SINGLELAYERWATER
 #define SIMPLE_SINGLE_LAYER_WATER 1
 #include "SingleLayerWaterCommon.ush"
@@ -613,9 +617,29 @@ void Main(
 
 		#if FULLY_ROUGH
 			Color += (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
-		#else
+		#else 
 			// MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z saves SpecularScale for direction light.
-			Color += (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * (DiffuseColor + SpecularColor * MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z * CalcSpecular(Roughness, RoL, NoH, H, MaterialParameters.WorldNormal));
+			
+			//add SG_SSS , modify diffuse lighting for directional light
+			#if MATERIAL_SHADINGMODEL_SG_SSS
+				float3 VertexNormalWS = MaterialParameters.TangentToWorld[2]; //tip : not eqaul to MaterialParameters.WorldNormal
+				float3 L = MobileDirectionalLight.DirectionalLightDirectionAndShadowTransition.xyz;
+				half Curvature = GetMaterialCustomData0(MaterialParameters);
+				half3 scatterColor = PixelMaterialInputs.Subsurface.rgb * (Curvature);
+				half3 SG = SGDiffuseLighting(VertexNormalWS, L, scatterColor);
+				half3 Diffuse = Shadow * SG * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
+				//test
+				//float VNoLWS = max(0, dot(VertexNormalWS, L));
+				//Diffuse = Shadow * VNoLWS * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
+				//Diffuse = SG;
+				//half VoL = pow(max( 1 - dot(  MaterialParameters.CameraVector ,L), 0 ),2);
+				//Diffuse += VoL*SG*Curvature;
+				//end
+				half3 Diffuse = Shadow * NoL * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
+			#endif
+
+			Color += Diffuse + (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * SpecularColor * MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z * CalcSpecular(Roughness, RoL, NoH, H, MaterialParameters.WorldNormal);
+			
 			// Environment map has been prenormalized, scale by lightmap luminance
 			half3 SpecularIBL = GetImageBasedReflectionLighting(MaterialParameters, Roughness, IndirectIrradiance);
 
@@ -672,10 +696,14 @@ void Main(
 				float3 L = ToLight * rsqrt(DistanceSqr);
 				float3 H = normalize(MaterialParameters.CameraVector + L);
 
-				float PointNoL = max(0, dot(MaterialParameters.WorldNormal, L));
+				#if MATERIAL_SHADINGMODEL_SG_SSS
+					float PointNoL = max(0, dot(MaterialParameters.TangentToWorld[2], L));
+				#else
+					float PointNoL = max(0, dot(MaterialParameters.WorldNormal, L));
+				#endif
 				float PointRoL = max(0, dot(MaterialParameters.ReflectionVector, L));
 				float PointNoH = max(0, dot(MaterialParameters.WorldNormal, H));
-
+				
 				float Attenuation;
 
 				if (LightColorAndFalloffExponent[i].w == 0)

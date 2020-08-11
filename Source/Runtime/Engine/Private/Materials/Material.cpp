@@ -6179,10 +6179,10 @@ static bool IsPropertyActive_Internal(EMaterialProperty InProperty,
 		Active = (ShadingModels.IsLit() && (!bIsTranslucentBlendMode || !bIsNonDirectionalTranslucencyLightingMode)) || bHasRefraction;
 		break;
 	case MP_SubsurfaceColor:
-		Active = ShadingModels.HasAnyShadingModel({ MSM_Subsurface, MSM_PreintegratedSkin, MSM_TwoSidedFoliage, MSM_Cloth });
+		Active = ShadingModels.HasAnyShadingModel({ MSM_Subsurface, MSM_PreintegratedSkin, MSM_TwoSidedFoliage, MSM_Cloth, MSM_SGSSS });//add SG_SSS shading model 自定义材质引脚SubsurfaceColor
 		break;
 	case MP_CustomData0:
-		Active = ShadingModels.HasAnyShadingModel({ MSM_ClearCoat, MSM_Hair, MSM_Cloth, MSM_Eye });
+		Active = ShadingModels.HasAnyShadingModel({ MSM_ClearCoat, MSM_Hair, MSM_Cloth, MSM_Eye, MSM_SGSSS });//add SG_SSS shading model 自定义材质引脚CustomData0
 		break;
 	case MP_CustomData1:
 		Active = ShadingModels.HasAnyShadingModel({ MSM_ClearCoat, MSM_Eye });

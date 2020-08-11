@@ -561,8 +561,8 @@ FText UMaterialGraph::GetWorldPositionOffsetPinName() const
 
 FText UMaterialGraph::GetSubsurfacePinName() const
 {
-	TArray<TKeyValuePair<EMaterialShadingModel, FString>> CustomPinNames({{MSM_Cloth, "Fuzz Color"}});
-	return FText::FromString(GetPinNameFromShadingModelField(Material->GetShadingModels(), CustomPinNames, "Subsurface Color"));
+	TArray<TKeyValuePair<EMaterialShadingModel, FString>> CustomPinNames({{MSM_Cloth, "Fuzz Color"},{MSM_SGSSS, "Scatter Color"} });
+	return FText::FromString(GetPinNameFromShadingModelField(Material->GetShadingModels(), CustomPinNames, "Subsurface Color"));//add SG_SSS shading model 修改Subsurface Color引脚的名字
 }
 
 FText UMaterialGraph::GetCustomDataPinName( uint32 Index ) const
@@ -573,7 +573,9 @@ FText UMaterialGraph::GetCustomDataPinName( uint32 Index ) const
 			{{MSM_ClearCoat, "Clear Coat"},
 			{MSM_Hair, "Backlit"},
 			{MSM_Cloth, "Cloth"},
-			{MSM_Eye, "Iris Mask"}});
+			{MSM_Eye, "Iris Mask"},
+			{MSM_SGSSS, "Curvature"} //add SG_SSS shading model 修改Custom Data 0引脚的名字
+			});
 
 		return FText::FromString(GetPinNameFromShadingModelField(Material->GetShadingModels(), CustomPinNames, "Custom Data 0"));
 	}

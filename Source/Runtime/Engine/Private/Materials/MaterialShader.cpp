@@ -70,6 +70,7 @@ FString GetShadingModelString(EMaterialShadingModel ShadingModel)
 		case MSM_Cloth:				ShadingModelName = TEXT("MSM_Cloth"); break;
 		case MSM_Eye:				ShadingModelName = TEXT("MSM_Eye"); break;
 		case MSM_SingleLayerWater:	ShadingModelName = TEXT("MSM_SingleLayerWater"); break;
+		case MSM_SGSSS:				ShadingModelName = TEXT("MSM_SGSSS"); break; //add SG_SSS shading model 添加着色模型的名称
 		default: ShadingModelName = TEXT("Unknown"); break;
 	}
 	return ShadingModelName;
