@@ -473,6 +473,7 @@ enum EMaterialShadingModel
 	MSM_Cloth					UMETA(DisplayName="Cloth"),
 	MSM_Eye						UMETA(DisplayName="Eye"),
 	MSM_SingleLayerWater		UMETA(DisplayName="SingleLayerWater"),
+	MSM_MobileSkin				UMETA(DisplayName = "Mobile Skin"),
 	/** Number of unique shading models. */
 	MSM_NUM						UMETA(Hidden),
 	/** Shading model will be determined by the Material Expression Graph,

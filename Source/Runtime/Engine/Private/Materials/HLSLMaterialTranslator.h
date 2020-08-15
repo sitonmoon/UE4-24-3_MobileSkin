@@ -1524,6 +1524,12 @@ ResourcesString = TEXT("");
 				NumSetMaterials++;
 			}
 
+			//add MobileSkin shading model 编译着色器时为SGSSS添加类型描述宏
+			if (ShadingModels.HasShadingModel(MSM_MobileSkin))
+			{
+				OutEnvironment.SetDefine(TEXT("MATERIAL_SHADINGMODEL_MobileSkin"), TEXT("1"));
+				NumSetMaterials++;
+			}
 			if(ShadingModels.HasShadingModel(MSM_SingleLayerWater) && (IsSwitchPlatform(Platform) || IsPS4Platform(Platform) || Platform == SP_XBOXONE_D3D12))
 			{
 				OutEnvironment.SetDefine(TEXT("DISABLE_FORWARD_LOCAL_LIGHTS"), TEXT("1"));

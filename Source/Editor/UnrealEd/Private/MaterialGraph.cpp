@@ -561,7 +561,7 @@ FText UMaterialGraph::GetWorldPositionOffsetPinName() const
 
 FText UMaterialGraph::GetSubsurfacePinName() const
 {
-	TArray<TKeyValuePair<EMaterialShadingModel, FString>> CustomPinNames({{MSM_Cloth, "Fuzz Color"}});
+	TArray<TKeyValuePair<EMaterialShadingModel, FString>> CustomPinNames({{MSM_Cloth, "Fuzz Color"},{MSM_MobileSkin, "Skin Ramp"} });
 	return FText::FromString(GetPinNameFromShadingModelField(Material->GetShadingModels(), CustomPinNames, "Subsurface Color"));
 }
 
@@ -573,7 +573,8 @@ FText UMaterialGraph::GetCustomDataPinName( uint32 Index ) const
 			{{MSM_ClearCoat, "Clear Coat"},
 			{MSM_Hair, "Backlit"},
 			{MSM_Cloth, "Cloth"},
-			{MSM_Eye, "Iris Mask"}});
+			{MSM_Eye, "Iris Mask"},
+			{MSM_MobileSkin, "Curvature"}});
 
 		return FText::FromString(GetPinNameFromShadingModelField(Material->GetShadingModels(), CustomPinNames, "Custom Data 0"));
 	}

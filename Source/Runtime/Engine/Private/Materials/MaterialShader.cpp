@@ -70,6 +70,7 @@ FString GetShadingModelString(EMaterialShadingModel ShadingModel)
 		case MSM_Cloth:				ShadingModelName = TEXT("MSM_Cloth"); break;
 		case MSM_Eye:				ShadingModelName = TEXT("MSM_Eye"); break;
 		case MSM_SingleLayerWater:	ShadingModelName = TEXT("MSM_SingleLayerWater"); break;
+		case MSM_MobileSkin:		ShadingModelName = TEXT("MSM_MobileSkin"); break;
 		default: ShadingModelName = TEXT("Unknown"); break;
 	}
 	return ShadingModelName;

@@ -614,8 +614,17 @@ void Main(
 		#if FULLY_ROUGH
 			Color += (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
 		#else
+			#if MATERIAL_SHADINGMODEL_MobileSkin
+				float3 VertexNormalWS = MaterialParameters.TangentToWorld[2]; //tip : not eqaul to MaterialParameters.WorldNormal
+                float3 L = MobileDirectionalLight.DirectionalLightDirectionAndShadowTransition.xyz;
+                half Curvature = GetMaterialCustomData0(MaterialParameters);
+                half3 SkinBSDF = PixelMaterialInputs.Subsurface.rgb * (Curvature);
+                half3 Diffuse = Shadow * SkinBSDF * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
+            #else    
+				half3 Diffuse = Shadow * NoL * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
+			#endif
 			// MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z saves SpecularScale for direction light.
-			Color += (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * (DiffuseColor + SpecularColor * MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z * CalcSpecular(Roughness, RoL, NoH, H, MaterialParameters.WorldNormal));
+			Color += Diffuse + (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * SpecularColor * MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z * CalcSpecular(Roughness, RoL, NoH, H, MaterialParameters.WorldNormal);			#endif
 			// Environment map has been prenormalized, scale by lightmap luminance
 			half3 SpecularIBL = GetImageBasedReflectionLighting(MaterialParameters, Roughness, IndirectIrradiance);
 
