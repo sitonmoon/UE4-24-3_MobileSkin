@@ -635,6 +635,7 @@ void Main(
 				//half VoL = pow(max( 1 - dot(  MaterialParameters.CameraVector ,L), 0 ),2);
 				//Diffuse += VoL*SG*Curvature;
 				//end
+			#else
 				half3 Diffuse = Shadow * NoL * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
 			#endif
 
