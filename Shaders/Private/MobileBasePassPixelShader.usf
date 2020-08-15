@@ -624,7 +624,7 @@ void Main(
 				half3 Diffuse = Shadow * NoL * MobileDirectionalLight.DirectionalLightColor.rgb * DiffuseColor;
 			#endif
 			// MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z saves SpecularScale for direction light.
-			Color += Diffuse + (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * SpecularColor * MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z * CalcSpecular(Roughness, RoL, NoH, H, MaterialParameters.WorldNormal);			#endif
+			Color += Diffuse + (Shadow * NoL) * MobileDirectionalLight.DirectionalLightColor.rgb * SpecularColor * MobileDirectionalLight.DirectionalLightDistanceFadeMADAndSpecularScale.z * CalcSpecular(Roughness, RoL, NoH, H, MaterialParameters.WorldNormal);
 			// Environment map has been prenormalized, scale by lightmap luminance
 			half3 SpecularIBL = GetImageBasedReflectionLighting(MaterialParameters, Roughness, IndirectIrradiance);
 
