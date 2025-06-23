@@ -1,7 +1,10 @@
 # UE4-24-3_SourceCode
-此目录为引擎根目录/Engine目录下<br>feature-<br>
--MobileSkin仅预积分贴图的移动端皮肤<br>
--SG_SSS使用高斯函数次表面散射的移动端皮肤<br>
+此目录为引擎根目录/Engine目录下  
+分支说明:  
+- develop:基于原始引擎代码添加用于MobileSkin的自定义ShadingModel
+- MobileSkin: 仅预积分贴图的移动端皮肤  
+- SG_SSS: 使用高斯函数次表面散射的移动端皮肤  
+以上分支都是独立基于原始引擎代码的修改，并不包含彼此分支代码。
 ![img](Screenshot_2020-06-22-21-01-18-183_com.YourCompany.MobileDigitalHuman.jpg)
 # MobileDigitalHuman - 移动端写实角色渲染
 * SM5.0, ES3.1 support;
