@@ -15,5 +15,5 @@
 
 # Install - 安装方式
 Android : 
-1. Connect your android device to computer , enable 'USB Debug';
-2. Install apk in folder : '/Android_ETC1/Install_MobileDigitalHuman***.bat'
+1. Go to: [release files](https://github.com/sitonmoon/UE4-24-3_MobileSkin/releases/tag/v1.0)
+2. Download "Android_ETC1.zip"
